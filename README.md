@@ -1,4 +1,4 @@
 # IP-range-blocker
 block custom ip ranges
 ##
-    wget https://github.com/Mikaeilkhaste/IP-range-blocker.git && chmod +x customipblocker.sh && ./customipblocker.sh
+    wget https://raw.githubusercontent.com/Mikaeilkhaste/IP-range-blocker/main/customipblocker.sh && chmod +x customipblocker.sh && ./customipblocker.sh
