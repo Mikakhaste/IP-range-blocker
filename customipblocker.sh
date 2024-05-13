@@ -7,8 +7,9 @@ display_menu() {
     echo "**********"
     echo "Choose an option:"
     echo "1. Block custom IP range"
-    echo "2. Unblock previously blocked IP ranges"
-    echo "3. Exit"
+    echo "2. Unblock specific IP range"
+    echo "3. Unblock all previously blocked IP ranges"
+    echo "4. Exit"
     echo "**********"
 }
 
@@ -26,8 +27,22 @@ block_ip_range() {
     echo "IP range blocked successfully."
 }
 
+# Function to unblock specific IP range
+unblock_ip_range() {
+    # Ask the user for the IP range to unblock
+    read -p "Enter the IP range to unblock (CIDR notation, e.g., 192.168.1.0/24): " USER_IP_RANGE
+
+    # Unblock the user-input IP range using iptables
+    iptables -D INPUT -s $USER_IP_RANGE -j DROP
+
+    # Save the iptables rules to make them persistent
+    iptables-save > /etc/iptables/rules.v4
+
+    echo "IP range unblocked successfully."
+}
+
 # Function to unblock previously blocked IP ranges
-unblock_ip_ranges() {
+unblock_all_ip_ranges() {
     # Flush all iptables rules
     iptables -F
 
@@ -46,9 +61,12 @@ while true; do
             block_ip_range
             ;;
         2)
-            unblock_ip_ranges
+            unblock_ip_range
             ;;
         3)
+            unblock_all_ip_ranges
+            ;;
+        4)
             echo "Exiting..."
             exit 0
             ;;
